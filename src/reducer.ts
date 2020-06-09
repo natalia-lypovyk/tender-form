@@ -50,12 +50,9 @@ export const reducer = (state: Data, action: any) => {
       return {
         tender: {
           ...state.tender,
-          items: {
+          items: [
             ...state.tender.items,
-            unit: {
-              name: action.payload
-            }
-          }
+          ]
         }
       }
     }
@@ -103,6 +100,10 @@ export const reducer = (state: Data, action: any) => {
     }
 
     case 'addItem': {
+
+console.log(state);
+
+
       return {
         tender: {
           ...state.tender,

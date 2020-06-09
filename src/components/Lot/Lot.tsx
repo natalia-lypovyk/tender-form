@@ -51,6 +51,7 @@ export const Lot: FC = () => {
       ))}
 
       <Button
+        type="button"
         onClick={(value) => dispatch({
           type: 'addLot',
           payload: {

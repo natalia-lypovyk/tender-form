@@ -19,31 +19,37 @@ export const Items: FC<{ relatedLot: string }> = ({ relatedLot }) => {
         
       ))}
       
+
+
       <Button
-        onClick={() => dispatch({
-          type: 'addItem',
-          payload: {
-            description: '',
-            id: uuidv4(),
-            relatedLot,
-            classification: {
-              scheme: 'CPV',
+        onClick={() => {
+          dispatch({
+            type: 'addItem',
+            payload: {
+              description: '',
               id: uuidv4(),
-              description: ''
-            },
-            additionalClassification: [],
-            quantity: 0,
-            unit: {
-              id: '123',
-              value: 'metre'
+              relatedLot,
+              classification: {
+                scheme: 'CPV',
+                id: uuidv4(),
+                description: ''
+              },
+              additionalClassification: [],
+              quantity: 0,
+              unit: {
+                id: '123',
+                value: 'metre'
+              }
             }
-          }
-        })}
+        })
+          
+        }}
         styled={{
           Button: css`
             display: block;
             margin: auto;          `
         }}
+        type='button'
       >
         Add item
       </Button>
