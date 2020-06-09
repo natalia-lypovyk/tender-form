@@ -1,9 +1,15 @@
-import React from 'react';
+import React, { FC, useReducer } from 'react';
+import { Context } from './context';
+import { reducer, initialState } from './reducer';
+import { Form } from './components';
 
-function App() {
+const App: FC = () => {
+  const [state, dispatch] = useReducer(reducer, initialState);
+
   return (
-    <div className="App">      
-    </div>
+    <Context.Provider value={{ state, dispatch }}>
+      <Form />
+    </Context.Provider>
   );
 }
 
