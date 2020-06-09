@@ -1,4 +1,20 @@
-export const reducer = (state: any, action: any) => {
+import { Data } from './types';
+
+export const initialState: Data = {
+  tender: {
+    title: '',
+    description: '',
+    classification: {
+      scheme: 'CPV',
+      id: '',
+      description: '',
+    },
+    lots: [],
+    items: []
+  }
+};
+
+export const reducer = (state: Data, action: any) => {
   switch (action.type) {
     case 'addTitle': {
       return {
@@ -56,13 +72,33 @@ export const reducer = (state: any, action: any) => {
       }
     }
 
+    case 'addLot': {
+      return {
+        tender: {
+          ...state.tender,
+          lots: [
+            ...state.tender.lots,
+            action.payload
+          ]
+        }
+      }
+    }
+
     case 'addLotTitle': {
       return {
         tender: {
           ...state.tender,
-          lots: {
-            title: action.payload,
-          }
+          lots: [
+            ...state.tender.lots.map((lot, index) => {
+              if (index === action.payload.index) {
+                return {
+                  id: lot.id,
+                  title: action.payload.value
+                }
+              }
+              return lot;
+            })
+          ]
         }
       }
     }
@@ -96,16 +132,3 @@ export const reducer = (state: any, action: any) => {
   }
 }
 
-export const initialState = {
-  tender: {
-    title: '',
-    description: '',
-    classification: {
-      scheme: 'CPV',
-      id: '',
-      description: '',
-    },
-    lots: [],
-    items: []
-  }
-};

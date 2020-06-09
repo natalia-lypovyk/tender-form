@@ -1,11 +1,12 @@
 import React from 'react';
+import { Data } from './types';
 
 type Action = {
   type: string;
   payload: any
 }
 
-export const ContextForm = {
+export const ContextForm: Data = {
   tender: {
     title: '',
     description: '',
@@ -19,7 +20,7 @@ export const ContextForm = {
   }
 };
 
-export const Context = React.createContext({ 
+export const Context = React.createContext<{state: typeof ContextForm, dispatch: (action: Action) => void}>({ 
   state: ContextForm, 
-  dispatch: (action: Action) => {}
+  dispatch: () => {}
 });

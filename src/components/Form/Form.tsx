@@ -7,9 +7,10 @@ import TextInput from 'ustudio-ui/components/Input/TextInput';
 import TextArea from 'ustudio-ui/components/Input/TextArea';
 import Button from 'ustudio-ui/components/Button';
 
+import { Lot } from '../Lot';
 import { Context } from '../../context';
 import { Classification } from '../Classification';
-import { Items } from '../Items';
+
 
 import Styled from './Form.styles';
 
@@ -60,7 +61,7 @@ export const Form: FC = () => {
           />
         </label>
         <Classification />  
-        <Items />     
+        <Lot />
         <Button
           styled={{
             Button: css`
