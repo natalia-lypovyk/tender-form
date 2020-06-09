@@ -1,5 +1,5 @@
 import React, { FC, useContext } from 'react';
-//import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
 import { css } from 'styled-components';
 
 import Text from 'ustudio-ui/components/Text';
@@ -13,93 +13,120 @@ import { Classification } from '../Classification';
 import Styled from './Item.styles';
 
 export const Item: FC = () => {
-  const { dispatch } = useContext(Context);
+  const { state, dispatch } = useContext(Context);
   
   const addClassification = () => {
-        
   }
-  
+
   return (
     <Styled.StyledForm>
-      <label>
-        Title:
-        <TextInput
-          name='item-title'
-          placeholder='Enter title'
-          onChange={(e) => dispatch({
-            type: 'addItemTitle',
-            payload: e
-          })}
-        />
-      </label>
-      <label>
-        Item description:
-        <TextInput
-          name='item-description'
-          placeholder="Enter description"
-          onChange={(e) => dispatch({
-            type: 'addItemDescription',
-            payload: e
-          })}
-        />
-      </label>
-      <label>
-        Related lot:
-        <TextInput
-          name='related-lot'
-          placeholder='Enter related lot'
-        />
-      </label>
-      <Classification />
-      <label>
-        <Text align='center'>Additional classification:</Text>
-        <Button 
-          onClick={addClassification}
-          styled={{
-            Button: css`
-              display: block;
-              margin: 10px auto;
-            `,
-          }}
-        >
-          Add
-        </Button>
-      </label>
-      
-      <label>
-        Unit:
-        <RadioGroup
-          direction='row'
-          name='options'
-          onChange={(e) => dispatch({
-            type: 'addUnit',
-            payload: e
-          })
-      }
-          options={{
-            'metre': {
-              label: 'metre',
-              value: 'metre'              
+      <Text variant='h5' align='center'>Items</Text>
+      {state.tender.items.map((item, index) => (
+        <React.Fragment key={index}>
+          <label>
+            Item description:
+            <TextInput
+              name='item-description'
+              placeholder='Enter description'
+              onChange={(value) => dispatch({
+                type: 'addItemDescription',
+                payload: {
+                  value,
+                  index
+                }
+              })}
+            />
+          </label>
+
+          <Classification />
+          <label>
+            <Text align='center'>Additional classification:</Text>
+            <Button 
+              type='button'
+              onClick={addClassification}
+              styled={{
+                Button: css`
+                  display: block;
+                  margin: 10px auto;
+                `,
+              }}
+            >
+              Add
+            </Button>
+          </label>
+
+          <label>
+            Unit:
+            <RadioGroup
+              direction='row'
+              name='options'
+              onChange={(value) => dispatch({
+                type: 'addUnit',
+                payload: {
+                  value,
+                  index
+                }
+              })}
+              options={{
+                'metre': {
+                  label: 'metre',
+                  value: 'metre'
+                },
+                'kilo': {
+                  label: 'kilo',
+                  value: 'kilo'
+                }
+              }}
+            />
+          </label>
+
+          <label>
+            Quantity:
+            <NumberInput
+              name='quantity'
+              onChange={(value) => dispatch({
+                type: 'addQuantity',
+                payload: {
+                  value,
+                  index
+                }
+              })}
+              placeholder='Enter quantity'
+            />
+          </label>
+        </React.Fragment>
+      ))}
+
+      <Button 
+        type='button' 
+        styled={{
+          Button: css`
+            display: block;
+            margin: auto;
+          `,
+        }}
+        onClick={(value) => dispatch({
+          type: 'addItem',
+          payload: {
+            description: '',
+            id: uuidv4(),
+            relatedLot: '',
+            classification: {
+              scheme: 'CPV',
+              id: uuidv4(),
+              description: ''
             },
-            'kilo': {
-              label: 'kilo',
-              value: 'kilo'
-            }            
-          }}
-        />
-      </label>
-      <label>
-        Quantity: 
-        <NumberInput 
-          name='quantity'
-          onChange={(e) => dispatch({
-            type: 'addQuantity',
-            payload: e
-          })}
-          placeholder='Enter quantity'
-          
-        />
-      </label>      
-    </Styled.StyledForm>
+            additionalClassification: [],
+            quantity: 0,
+            unit: {
+              id: '123',
+              value: 'metre'
+            }
+          }
+        })}
+      >
+        Add item
+      </Button>
+    </Styled.StyledForm >
   )
 }

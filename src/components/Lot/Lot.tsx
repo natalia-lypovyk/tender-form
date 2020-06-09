@@ -6,36 +6,51 @@ import Text from 'ustudio-ui/components/Text';
 import TextInput from 'ustudio-ui/components/Input/TextInput';
 import Button from 'ustudio-ui/components/Button';
 
-import { Items } from '../Items';
+import { Item } from '../Item';
 import { Context } from '../../context';
 
+import Styled from './Lot.styles';
 
 export const Lot: FC = () => {
-  const { state, dispatch } = useContext(Context);  
+  const { state, dispatch } = useContext(Context);
 
   return (
-    <>
-      <Text align='center' variant='h5'>Create lot</Text> 
+    <Styled.Form>
+      <Text align='center' variant='h5'>Create lot</Text>
       {state.tender.lots.map((lot, index) => (
-        <label key={lot.id}>
-        Lot title:
-        <Flex>
-          <TextInput 
-            name='lot-title' 
-            placeholder='Enter lot title'
-            onChange={(value) => dispatch({
-              type: 'addLotTitle',
-              payload: {
-                value,
-                index
-              }
-            })}
-          />               
-        </Flex>
-      </label>     
-      ))}      
-      
-      <Button 
+        <React.Fragment key={lot.id}>
+          <label key={lot.id}>
+            Lot title:
+            <Flex>
+              <TextInput
+                name='lot-title'
+                placeholder='Enter lot title'
+                onChange={(value) => dispatch({
+                  type: 'addLotTitle',
+                  payload: {
+                    value,
+                    index
+                  }
+                })}
+              />
+              <Button
+                type='button'
+                onClick={() => dispatch({
+                  type: 'removeLot',
+                  payload: {
+                    index,
+                  }
+                })}
+              >
+                Remove
+              </Button>
+            </Flex>
+          </label>
+          <Item />
+        </React.Fragment>
+      ))}
+
+      <Button
         onClick={(value) => dispatch({
           type: 'addLot',
           payload: {
@@ -52,8 +67,6 @@ export const Lot: FC = () => {
       >
         Add lot
       </Button>
-      
-      <Items />
-    </>
+    </Styled.Form>
   )
 }

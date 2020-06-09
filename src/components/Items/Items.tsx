@@ -22,7 +22,7 @@ export const Items: FC = () => {
             margin: auto;          `
         }}
       >
-        Add new item
+        Add item
       </Button>
     </>
   );

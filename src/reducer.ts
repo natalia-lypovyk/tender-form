@@ -84,6 +84,17 @@ export const reducer = (state: Data, action: any) => {
       }
     }
 
+    case 'removeLot': {
+      return {
+        tender: {
+          ...state.tender,
+          lots: [
+            ...state.tender.lots.filter((lot, i) => i !== action.payload.index)
+          ]
+        }
+      }
+    }
+
     case 'addLotTitle': {
       return {
         tender: {
@@ -103,14 +114,14 @@ export const reducer = (state: Data, action: any) => {
       }
     }
 
-    case 'addItemTitle': {
+    case 'addItem': {
       return {
-        tender : {
+        tender: {
           ...state.tender,
-          items: {
+          items: [
             ...state.tender.items,
-            title: action.payload            
-          }
+            action.payload
+          ]
         }
       }
     }
@@ -120,13 +131,21 @@ export const reducer = (state: Data, action: any) => {
         tender : {
           ...state.tender,
           items: {
-            ...state.tender.items,
-            description: action.payload            
+            ...state.tender.items.map((item, index) => {
+              if (index === action.payload.index) {
+                return {
+                  id: item.id,
+                  description: action.payload.value
+                }
+              }
+              return item;
+            })       
           }
         }
       }
     }
 
+    
     default:
       return state;
   }
