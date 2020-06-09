@@ -60,18 +60,6 @@ export const reducer = (state: Data, action: any) => {
       }
     }
 
-    case 'addQuantity': {
-      return {
-        tender: {
-          ...state.tender,
-          items: {
-            ...state.tender.items,
-            quantity: action.payload
-          }
-        }
-      }
-    }
-
     case 'addLot': {
       return {
         tender: {
@@ -134,7 +122,7 @@ export const reducer = (state: Data, action: any) => {
             ...state.tender.items.map((item, index) => {
               if (index === action.payload.index) {
                 return {
-                  id: item.id,
+                  ...item,
                   description: action.payload.value
                 }
               }
@@ -145,9 +133,49 @@ export const reducer = (state: Data, action: any) => {
       }
     }
 
+    case 'addQuantity': {
+      return {
+        tender: {
+          ...state.tender,
+          items: {
+            ...state.tender.items.map((item, index) => {
+              if (index === action.payload.index) {
+                return {
+                  ...item,
+                  quantity: action.payload.value
+                }
+              }
+              return item;
+            })
+
+          }
+        }
+      }
+    }
+
+    case 'addItemClassificationDescription': {
+      return {
+        tender: {
+          ...state.tender,
+          items: {
+            ...state.tender.items,
+            classification: {
+              ...state.tender.items.map((item, index) => {
+                if (index === action.payload.index) {
+                  return {
+                    ...item,
+                    description: action.payload.value
+                  }
+                }
+                return item;
+              })
+            }
+          }
+        }
+      }
+    }
     
     default:
       return state;
   }
 }
-

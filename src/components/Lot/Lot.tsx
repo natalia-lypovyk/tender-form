@@ -6,7 +6,7 @@ import Text from 'ustudio-ui/components/Text';
 import TextInput from 'ustudio-ui/components/Input/TextInput';
 import Button from 'ustudio-ui/components/Button';
 
-import { Item } from '../Item';
+import { Items } from '../Items';
 import { Context } from '../../context';
 
 import Styled from './Lot.styles';
@@ -19,7 +19,7 @@ export const Lot: FC = () => {
       <Text align='center' variant='h5'>Create lot</Text>
       {state.tender.lots.map((lot, index) => (
         <React.Fragment key={lot.id}>
-          <label key={lot.id}>
+          <label>
             Lot title:
             <Flex>
               <TextInput
@@ -46,7 +46,7 @@ export const Lot: FC = () => {
               </Button>
             </Flex>
           </label>
-          <Item />
+          <Items relatedLot={lot.id} />
         </React.Fragment>
       ))}
 
